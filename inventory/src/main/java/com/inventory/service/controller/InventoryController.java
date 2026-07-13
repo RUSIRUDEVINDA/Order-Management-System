@@ -1,0 +1,47 @@
+package com.inventory.service.controller;
+
+import com.inventory.service.dto.InventoryDTO;
+import com.inventory.service.service.InventoryService;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@CrossOrigin
+@RequestMapping(value = "api/vi/inventory")
+
+public class InventoryController {
+    @Autowired
+    private InventoryService inventoryService;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @GetMapping("")
+    public List<InventoryDTO> getAllItems(){
+        return inventoryService.getAllItems();
+    }
+
+    @GetMapping("/{id}")
+    public InventoryDTO getItemById(@PathVariable int id) {
+        return inventoryService.getItemById(id);
+    }
+
+    @PostMapping("")
+    public InventoryDTO createItem(@RequestBody InventoryDTO inventoryDTO) {
+        return inventoryService.createItem(inventoryDTO);
+    }
+
+    @PutMapping("/{id}")
+    public InventoryDTO updateItem(@RequestBody InventoryDTO inventoryDTO) {
+        return inventoryService.updateItem(inventoryDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteItem(@PathVariable int id) {
+        return inventoryService.deleteItem(id);
+    }
+
+}
