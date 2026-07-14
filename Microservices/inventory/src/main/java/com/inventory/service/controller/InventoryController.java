@@ -4,6 +4,7 @@ import com.inventory.service.dto.InventoryDTO;
 import com.inventory.service.service.InventoryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,29 +20,29 @@ public class InventoryController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @GetMapping("")
+    @GetMapping
     public List<InventoryDTO> getAllItems(){
         return inventoryService.getAllItems();
     }
 
-    @GetMapping("/{id}")
-    public InventoryDTO getItemById(@PathVariable int id) {
-        return inventoryService.getItemById(id);
+    @GetMapping("/{itemID}")
+    public InventoryDTO getItemById(@PathVariable Integer itemID) {
+        return inventoryService.getItemById(itemID);
     }
 
-    @PostMapping("")
+    @PostMapping
     public InventoryDTO createItem(@RequestBody InventoryDTO inventoryDTO) {
         return inventoryService.createItem(inventoryDTO);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{itemID}")
     public InventoryDTO updateItem(@RequestBody InventoryDTO inventoryDTO) {
         return inventoryService.updateItem(inventoryDTO);
     }
 
-    @DeleteMapping("/{id}")
-    public String deleteItem(@PathVariable int id) {
-        return inventoryService.deleteItem(id);
+    @DeleteMapping("/{itemID}")
+    public String deleteItem(@PathVariable Integer itemID) {
+        return inventoryService.deleteItem(itemID);
     }
 
 }

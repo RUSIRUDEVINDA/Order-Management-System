@@ -40,7 +40,7 @@ public class ProductService {
     public ProductDTO updateProduct(int id, ProductDTO productDTO) {
         Product existing = productRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
-        existing.setName(productDTO.getName());
+        existing.setProductName(productDTO.getProductName());
         Product updated = productRepo.save(existing);
         return modelMapper.map(updated, ProductDTO.class);
     }

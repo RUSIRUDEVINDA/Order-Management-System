@@ -15,28 +15,28 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @GetMapping("")
+    @GetMapping
     public List<OrderDTO> getAllOrders(){
         return orderService.getAllOrders();
     }
 
-    @GetMapping("/{id}")
-    public OrderDTO getOrderById(@PathVariable int id){
-        return orderService.getOrderById(id);
+    @GetMapping("/{orderId}")
+    public OrderDTO getOrderById(@PathVariable Integer orderId){
+        return orderService.getOrderById(orderId);
     }
 
-    @PostMapping("")
+    @PostMapping
     public OrderDTO createOrder(@RequestBody OrderDTO orderDTO){
         return orderService.createOrder(orderDTO);
     }
 
-    @PutMapping("/{id}")
-    public OrderDTO updateOrder(@PathVariable int id, @RequestBody OrderDTO orderDTO){
+    @PutMapping("/{orderId}")
+    public OrderDTO updateOrder(@PathVariable Integer orderId, @RequestBody OrderDTO orderDTO){
         return orderService.updateOrder(orderDTO);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteOrder(@PathVariable int id){
-        orderService.deleteOrder(id);
+    @DeleteMapping("/{orderId}")
+    public void deleteOrder(@PathVariable Integer orderId){
+        orderService.deleteOrder(orderId);
     }
 }
