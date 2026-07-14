@@ -8,7 +8,7 @@
     </parent>
     <artifactId>order</artifactId>
     <name>Archetype - order</name>
-    <url>http://maven.apache.org</url>
+    <url>https://maven.apache.org</url>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -21,33 +21,35 @@ public class OrderService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public List<OrderDTO> getAllOrders(){
+    public List<OrderDTO> getAllOrders() {
         List<Order> orderList = orderRepo.findAll();
-        return modelMapper.map(orderList, new TypeToken<List<OrderDTO>>(){}.getType());
+        return modelMapper.map(orderList, new TypeToken<List<OrderDTO>>() {
+        }.getType());
     }
 
-    public OrderDTO getOrderById(Integer orderId){
-        Order order = orderRepo.getOrderById(orderId);
+    public OrderDTO getOrderById(Integer id) {
+        Order order = orderRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
         return modelMapper.map(order, OrderDTO.class);
     }
 
     public OrderDTO createOrder(OrderDTO orderDTO) {
         Order order = modelMapper.map(orderDTO, Order.class);
-        Order saved = orderRepo.save(order);
-        return modelMapper.map(saved, OrderDTO.class);
+        Order savedOrder = orderRepo.save(order);
+        return modelMapper.map(savedOrder, OrderDTO.class);
     }
 
-    public OrderDTO updateOrder(OrderDTO OrderDTO) {
-        orderRepo.save(modelMapper.map(OrderDTO, Order.class));
-        return OrderDTO;
+    public OrderDTO updateOrder(Integer id, OrderDTO orderDTO) {
+        Order existingOrder = orderRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+        existingOrder.setOrderDate(orderDTO.getOrderDate());
+        existingOrder.setAmount(orderDTO.getAmount());
+        Order updatedOrder = orderRepo.save(existingOrder);
+        return modelMapper.map(updatedOrder, OrderDTO.class);
     }
 
-    public void deleteOrder(int id){
-        if(!orderRepo.existsById(id)){
-            throw new RuntimeException("Order not found with id: " + id);
-        }
-        orderRepo.deleteById(id);
+    public void deleteOrder(Integer orderId) {
+        orderRepo.deleteById(orderId);
     }
 
 }
-

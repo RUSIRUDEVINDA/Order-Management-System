@@ -1,6 +1,8 @@
 package com.order.service.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -9,14 +11,12 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "orders")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-
 public class Order {
     @Id
-    private int id;
-    private int orderId;
-    private String  orderDate;
-    private int amount;
+    private Integer id;
+    private String orderDate;
+    private Integer amount;
 }
