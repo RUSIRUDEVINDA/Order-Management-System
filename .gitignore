@@ -23,6 +23,3 @@
 hs_err_pid*
 replay_pid*
 product/src/main/resources/application.properties
-Microservices/product/src/main/resources/application.properties
-Microservices/order/src/main/resources/application.properties
-Microservices/inventory/src/main/resources/application.properties
