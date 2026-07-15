@@ -13,8 +13,8 @@ import java.util.List;
 
 @Service
 @Transactional
-
 public class OrderService {
+
     @Autowired
     private OrderRepo orderRepo;
 
@@ -23,33 +23,26 @@ public class OrderService {
 
     public List<OrderDTO> getAllOrders() {
         List<Order> orderList = orderRepo.findAll();
-        return modelMapper.map(orderList, new TypeToken<List<OrderDTO>>() {
-        }.getType());
+        return modelMapper.map(orderList, new TypeToken<List<OrderDTO>>(){}.getType());
     }
 
     public OrderDTO getOrderById(Integer id) {
-        Order order = orderRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+        Order order = orderRepo.findById(id).orElse(null);
         return modelMapper.map(order, OrderDTO.class);
     }
 
-    public OrderDTO createOrder(OrderDTO orderDTO) {
-        Order order = modelMapper.map(orderDTO, Order.class);
-        Order savedOrder = orderRepo.save(order);
-        return modelMapper.map(savedOrder, OrderDTO.class);
+    public OrderDTO addOrder(OrderDTO orderDTO) {
+        orderRepo.save(modelMapper.map(orderDTO, Order.class));
+        return orderDTO;
     }
 
-    public OrderDTO updateOrder(Integer id, OrderDTO orderDTO) {
-        Order existingOrder = orderRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
-        existingOrder.setOrderDate(orderDTO.getOrderDate());
-        existingOrder.setAmount(orderDTO.getAmount());
-        Order updatedOrder = orderRepo.save(existingOrder);
-        return modelMapper.map(updatedOrder, OrderDTO.class);
+    public OrderDTO updateOrder(OrderDTO orderDTO) {
+        orderRepo.save(modelMapper.map(orderDTO, Order.class));
+        return orderDTO;
     }
 
-    public void deleteOrder(Integer orderId) {
-        orderRepo.deleteById(orderId);
+    public String deleteOrder(OrderDTO orderDTO) {
+        orderRepo.delete(modelMapper.map(orderDTO, Order.class));
+        return "ORDER DELETED";
     }
-
 }

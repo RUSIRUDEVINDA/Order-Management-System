@@ -9,35 +9,34 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("api/v1/orders")
-
+@RequestMapping(value = "api/v1/")
 public class OrderController {
+
     @Autowired
     private OrderService orderService;
 
-    @GetMapping("")
-    public List<OrderDTO> getAllOrders(){
+    @GetMapping("/getOrders")
+    public List<OrderDTO> getOrders() {
         return orderService.getAllOrders();
     }
 
-    @GetMapping("/{id}")
-    public OrderDTO getOrderById(@PathVariable int id){
+    @GetMapping("/getOrder/{id}")
+    public OrderDTO getOrderById(@PathVariable("id") Integer id) {
         return orderService.getOrderById(id);
     }
 
-    @PostMapping("")
-    public OrderDTO createOrder(@RequestBody OrderDTO orderDTO){
-        return orderService.createOrder(orderDTO);
+    @PostMapping("/addOrder")
+    public OrderDTO addOrder(@RequestBody OrderDTO orderDTO) {
+        return orderService.addOrder(orderDTO);
     }
 
-    @PutMapping("/{id}")
-    public OrderDTO updateOrder(@PathVariable("id") int id, @RequestBody OrderDTO orderDTO)
-    {
-        return orderService.updateOrder(id, orderDTO);
+    @PutMapping("/updateOrder")
+    public OrderDTO updateOrder(@RequestBody OrderDTO orderDTO) {
+        return orderService.updateOrder(orderDTO);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteOrder(@PathVariable int id){
-        orderService.deleteOrder(id);
+    @DeleteMapping("/deleteOrder")
+    public String deleteOrder(@RequestBody OrderDTO orderDTO) {
+        return orderService.deleteOrder(orderDTO);
     }
 }
