@@ -14,41 +14,35 @@ import java.util.List;
 @Service
 @Transactional
 public class ProductService {
+
     @Autowired
     private ProductRepo productRepo;
 
     @Autowired
     private ModelMapper modelMapper;
 
-    public List<ProductDTO> getAllProducts(){
+    public List<ProductDTO> getAllProducts() {
         List<Product> productList = productRepo.findAll();
         return modelMapper.map(productList, new TypeToken<List<ProductDTO>>(){}.getType());
     }
 
-    public ProductDTO getProductById(int id){
-        Product product = productRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
+    public ProductDTO getProductById(Integer id) {
+        Product product = productRepo.findById(id).orElse(null);
         return modelMapper.map(product, ProductDTO.class);
     }
 
-    public ProductDTO createProduct(ProductDTO productDTO) {
-        Product product = modelMapper.map(productDTO, Product.class);
-        Product saved = productRepo.save(product);
-        return modelMapper.map(saved, ProductDTO.class);
+    public ProductDTO addProduct(ProductDTO productDTO) {
+        productRepo.save(modelMapper.map(productDTO, Product.class));
+        return productDTO;
     }
 
-    public ProductDTO updateProduct(int id, ProductDTO productDTO) {
-        Product existing = productRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
-        existing.setProductName(productDTO.getProductName());
-        Product updated = productRepo.save(existing);
-        return modelMapper.map(updated, ProductDTO.class);
+    public ProductDTO updateProduct(ProductDTO productDTO) {
+        productRepo.save(modelMapper.map(productDTO, Product.class));
+        return productDTO;
     }
 
-    public void deleteProduct(int id){
-        if(!productRepo.existsById(id)){
-            throw new RuntimeException("Product not found with id: " + id);
-        }
-        productRepo.deleteById(id);
+    public String deleteProduct(ProductDTO productDTO) {
+        productRepo.delete(modelMapper.map(productDTO, Product.class));
+        return "PRODUCT DELETED";
     }
 }
