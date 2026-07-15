@@ -1,5 +1,6 @@
 package com.order.service.controller;
 
+import com.order.service.common.OrderResponse;
 import com.order.service.dto.OrderDTO;
 import com.order.service.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "api/v1/")
+@RequestMapping(value = "api/v1/orders")
 public class OrderController {
 
     @Autowired
@@ -26,7 +27,7 @@ public class OrderController {
     }
 
     @PostMapping("/addOrder")
-    public OrderDTO addOrder(@RequestBody OrderDTO orderDTO) {
+    public OrderResponse addOrder(@RequestBody OrderDTO orderDTO) {
         return orderService.addOrder(orderDTO);
     }
 
