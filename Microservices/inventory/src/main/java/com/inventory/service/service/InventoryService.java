@@ -26,8 +26,8 @@ public class InventoryService {
         return modelMapper.map(inventoryList, new TypeToken<List<InventoryDTO>>(){}.getType());
     }
 
-    public InventoryDTO getItemById(Integer id) {
-        Inventory inventory = inventoryRepo.findById(id).orElse(null);
+    public InventoryDTO getItemById(Integer itemID) {
+        Inventory inventory = inventoryRepo.getInventoryByItemID(itemID);
         return modelMapper.map(inventory, InventoryDTO.class);
     }
 
@@ -41,8 +41,8 @@ public class InventoryService {
         return inventoryDTO;
     }
 
-    public String deleteItem(InventoryDTO inventoryDTO) {
-        inventoryRepo.delete(modelMapper.map(inventoryDTO, Inventory.class));
+    public String deleteItemById(Integer id) {
+        inventoryRepo.deleteById(id);
         return "ITEM DELETED";
     }
 }
