@@ -3,18 +3,18 @@ package com.inventory.service.service;
 import com.inventory.service.dto.InventoryDTO;
 import com.inventory.service.model.Inventory;
 import com.inventory.service.repo.InventoryRepo;
-import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @Transactional
-
 public class InventoryService {
+
     @Autowired
     private InventoryRepo inventoryRepo;
 
@@ -22,16 +22,16 @@ public class InventoryService {
     private ModelMapper modelMapper;
 
     public List<InventoryDTO> getAllItems() {
-        List<Inventory>itemList = inventoryRepo.findAll();
-        return modelMapper.map(itemList, new TypeToken<List<InventoryDTO>>(){}.getType());
+        List<Inventory> inventoryList = inventoryRepo.findAll();
+        return modelMapper.map(inventoryList, new TypeToken<List<InventoryDTO>>(){}.getType());
     }
 
-    public InventoryDTO getItemById(Integer itemId) {
-        Inventory item = inventoryRepo.getItemById(itemId);
-        return modelMapper.map(item, InventoryDTO.class);
+    public InventoryDTO getItemById(Integer id) {
+        Inventory inventory = inventoryRepo.findById(id).orElse(null);
+        return modelMapper.map(inventory, InventoryDTO.class);
     }
 
-    public InventoryDTO createItem(InventoryDTO inventoryDTO) {
+    public InventoryDTO addItem(InventoryDTO inventoryDTO) {
         inventoryRepo.save(modelMapper.map(inventoryDTO, Inventory.class));
         return inventoryDTO;
     }
@@ -41,10 +41,8 @@ public class InventoryService {
         return inventoryDTO;
     }
 
-    public String deleteItem(Integer itemId) {
-        inventoryRepo.deleteById(itemId);
-        return "Item deleted";
+    public String deleteItem(InventoryDTO inventoryDTO) {
+        inventoryRepo.delete(modelMapper.map(inventoryDTO, Inventory.class));
+        return "ITEM DELETED";
     }
-
-
 }

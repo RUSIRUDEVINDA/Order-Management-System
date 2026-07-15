@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class InventoryDTO {
+
     private int id;
     private int itemID;
     private int productID;
