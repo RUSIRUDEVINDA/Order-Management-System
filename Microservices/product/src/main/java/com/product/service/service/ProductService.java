@@ -13,6 +13,7 @@ import java.util.List;
 
 @Service
 @Transactional
+
 public class ProductService {
 
     @Autowired
@@ -23,11 +24,14 @@ public class ProductService {
 
     public List<ProductDTO> getAllProducts() {
         List<Product> productList = productRepo.findAll();
-        return modelMapper.map(productList, new TypeToken<List<ProductDTO>>(){}.getType());
+        return modelMapper.map(productList, new TypeToken<List<ProductDTO>>() {}.getType());
     }
 
-    public ProductDTO getProductById(Integer id) {
-        Product product = productRepo.findById(id).orElse(null);
+    public ProductDTO getProductById(Integer productID) {
+        Product product = productRepo.getProductByProductID(productID);
+        if (product == null) {
+            throw new RuntimeException("Product not found");
+        }
         return modelMapper.map(product, ProductDTO.class);
     }
 
@@ -41,8 +45,8 @@ public class ProductService {
         return productDTO;
     }
 
-    public String deleteProduct(ProductDTO productDTO) {
-        productRepo.delete(modelMapper.map(productDTO, Product.class));
+    public String deleteProductById(Integer id) {
+        productRepo.deleteById(id);
         return "PRODUCT DELETED";
     }
 }

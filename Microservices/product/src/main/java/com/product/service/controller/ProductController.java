@@ -9,7 +9,8 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "api/v1/")
+@RequestMapping(value = "api/v1/products")
+
 public class ProductController {
 
     @Autowired
@@ -20,9 +21,9 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-    @GetMapping("/getProduct/{id}")
-    public ProductDTO getProductById(@PathVariable("id") Integer id) {
-        return productService.getProductById(id);
+    @GetMapping("/getProduct/{productID}")
+    public ProductDTO getProductById(@PathVariable Integer productID) {
+        return productService.getProductById(productID);
     }
 
     @PostMapping("/addProduct")
@@ -35,8 +36,8 @@ public class ProductController {
         return productService.updateProduct(productDTO);
     }
 
-    @DeleteMapping("/deleteProduct")
-    public String deleteProduct(@RequestBody ProductDTO productDTO) {
-        return productService.deleteProduct(productDTO);
+    @DeleteMapping("/deleteProduct/{id}")
+    public String deleteProductById(@PathVariable Integer id) {
+        return productService.deleteProductById(id);
     }
 }
