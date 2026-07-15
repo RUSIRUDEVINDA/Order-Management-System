@@ -16,7 +16,7 @@ public class Order {
 
     @Id
     private Integer id;
-
+    private Integer itemID;
     private String orderDate;
     private Integer amount;
 }
