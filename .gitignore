@@ -30,3 +30,6 @@ Microservices/inventory/src/main/resources/application.properties
 Microservices/inventory/src/main/resources/application.properties
 Microservices/order/src/main/resources/application.properties
 Microservices/order/src/main/resources/application.properties
+Microservices/order/src/main/resources/application.properties
+Microservices/inventory/src/main/resources/application.properties
+Microservices/base/src/main/resources/application.properties
