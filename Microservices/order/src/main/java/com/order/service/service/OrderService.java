@@ -94,8 +94,8 @@ public class OrderService {
         orderRepo.save(modelMapper.map(orderDTO, Order.class));
         return orderDTO;
     }
-    public String deleteOrder(OrderDTO orderDTO) {
-        orderRepo.delete(modelMapper.map(orderDTO, Order.class));
+    public String deleteOrderById(Integer id) {
+        orderRepo.deleteById(id);
         return "ORDER DELETED";
     }
 }
