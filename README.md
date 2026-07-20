@@ -48,7 +48,7 @@ The system is designed with multiple independent services following the **Databa
 | **`product`** | `8083` | Manages product catalog and information. Owns its own MySQL DB. |
 | **`inventory`** | `8082` | Manages stock and item availability. Consumes Kafka events. |
 | **`order`** | `8081` | Accepts orders, orchestrates validation, and publishes events via Kafka. |
-| **`base`** | N/A | Shared library module containing common DTOs (e.g., `OrderEventDTO`). |
+| **`base`** | 8084 | Shared library module containing common DTOs (e.g., `OrderEventDTO`). |
 
 ---
 
